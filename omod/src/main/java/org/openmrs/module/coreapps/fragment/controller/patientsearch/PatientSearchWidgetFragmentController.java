@@ -62,7 +62,7 @@ public class PatientSearchWidgetFragmentController {
         model.addAttribute("doInitialSearch", doInitialSearch);
 
         if (showLastViewedPatients) {
-            List<Patient> patients = GeneralUtils.getLastViewedPatients(sessionContext.getCurrentUser());
+            List<Patient> patients = GeneralUtils.getPatientsForEnterprise(sessionContext.getCurrentUser());
             model.addAttribute("lastViewedPatients", patients);
         }
 
