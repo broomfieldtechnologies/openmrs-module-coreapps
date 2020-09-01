@@ -620,6 +620,7 @@ function PatientSearchWidget(configuration){
             }, effectiveSearchDelay);
 
         }else if( text.length == 0 ){
+        	reset();
             updateSearchResults();
         }
 
