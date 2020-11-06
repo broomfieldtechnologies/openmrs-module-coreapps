@@ -41,7 +41,7 @@
         <emrapiVersion>1.29.0-SNAPSHOT</emrapiVersion>
         <uiframeworkVersion>3.15.0</uiframeworkVersion>
         <eventVersion>2.5</eventVersion>
-        <htmlformentryVersion>3.3.0</htmlformentryVersion>
+        <htmlformentryVersion>3.8.0</htmlformentryVersion>
         <appuiVersion>1.7</appuiVersion>
         <appframeworkVersion>2.9</appframeworkVersion>
         <openMRSVersion>1.12.0</openMRSVersion>
@@ -206,7 +206,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
-				<artifactId>htmlformentry-api-1.10</artifactId>
+				<artifactId>htmlformentry-api</artifactId>
 				<version>${htmlformentryVersion}</version>
 				<scope>provided</scope>
 			</dependency>
