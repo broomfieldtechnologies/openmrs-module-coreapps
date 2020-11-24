@@ -13,7 +13,7 @@
 	<properties>
 		<openMRSVersion>2.2.0</openMRSVersion>
 		<metadatasharingVersion>1.2.2</metadatasharingVersion>
-		<emrapiVersion>1.27.0</emrapiVersion>
+		<emrapiVersion>1.29.0</emrapiVersion>
 		<reportingVersion>0.10.3</reportingVersion>
 		<htmlformentryVersion>3.8.0</htmlformentryVersion>
 		
@@ -92,7 +92,7 @@
 						<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>htmlformentry-api</artifactId>
-				<version>3.8.0</version>
+				<version>${htmlformentryVersion}</version>
 			</dependency>
 			
 			<dependency>

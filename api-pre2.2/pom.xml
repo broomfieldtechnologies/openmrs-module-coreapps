@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>htmlformentry-api</artifactId>
-			<version>3.8.0</version>
+			<version>${htmlformentryVersion}</version>
 			
 		</dependency>
 
