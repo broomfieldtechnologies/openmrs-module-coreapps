@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -21,6 +22,7 @@ import org.openmrs.api.OrderService;
 import org.openmrs.api.PatientService;
 import org.openmrs.module.appframework.domain.AppDescriptor;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.fragment.FragmentConfiguration;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 
@@ -43,6 +45,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 	
 	private AppDescriptor app;
 	
+	private BasicUiUtils ui;
 	@Mock
 	private PatientService patientService;
 	
@@ -53,6 +56,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 	public void setup() throws Exception {
 		fragmentController = new ActiveDrugOrdersFragmentController();
 		patient = new Patient(1);
+		patient.setUuid("patient-uuid");
 		drugOrders = new OrderType(1); 
 		activeDrugOrders = new ArrayList<Order>();
 		activeDrugOrders.add(new Order(1));
@@ -61,6 +65,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		wrapper.setPatient(patient);
 		config = new FragmentConfiguration();
 		model = new FragmentModel();
+		ui = new BasicUiUtils();
 		
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream("dispensedMedication_app.json");    	
     	app = new ObjectMapper().readValue(inputStream, new TypeReference<AppDescriptor>() {});
@@ -77,7 +82,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patient", patient);
 
 		// replay
-		fragmentController.controller(config, app, patientService, orderService, model);
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
@@ -90,7 +95,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patient", wrapper);
 
 		// replay
-		fragmentController.controller(config, app, patientService, orderService, model);
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
@@ -103,7 +108,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patientId", 1);
 
 		// replay
-		fragmentController.controller(config, app, patientService, orderService, model);
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
@@ -116,13 +121,13 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patientId", 1);
 
 		// replay
-		fragmentController.controller(config, app, patientService, orderService, model);
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
 		assertEquals(activeDrugOrders, model.getAttribute("activeDrugOrders"));
 		assertEquals(app.getConfig().get("detailsUrl").asText(), model.getAttribute("detailsUrl").toString());
-		assertEquals(app.getConfig().get("displayActivationDate").asBoolean(), (Boolean) model.getAttribute("displayActivationDate"));
+		assertEquals(app.getConfig().get("displayActivationDate").asBoolean(), model.getAttribute("displayActivationDate"));
 	}
 	
 	@Test
@@ -132,10 +137,37 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		app.getConfig().remove("detailsUrl");
 
 		// replay
-		fragmentController.controller(config, app, patientService, orderService, model);
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
 		
 		// verify
 		assertEquals(app.getConfig().get("detailsUrl"), null);
+	}
+		@Test
+		public void controller_shouldAddDefaultReturnUrlToModelGivenConfigParameterMissing() throws Exception {
+			// setup
+			config.addAttribute("patientId", 1);
+			app.getConfig().remove("returnUrl");
+
+			// replay
+			fragmentController.controller(config, app, patientService, orderService, model, ui);
+
+			// verify
+			assertEquals(model.getAttribute("returnUrl"), "/openmrs/coreapps/clinicianfacing/patient.page?patientId=patient-uuid&");
+		}
+
+		@Test
+		public void controller_shouldAddReturnUrlToModelGivenConfigParameterPresent() throws Exception {
+			// setup
+			config.addAttribute("patientId", 1);
+
+			// replay
+			fragmentController.controller(config, app, patientService, orderService, model, ui);
+
+			// verify
+			assertEquals(model.getAttribute("returnUrl"), "/openmrs/custom/returnUrl.page?patientId={{patientUuid}}");
+
+
+
 		
 	}
 	
@@ -146,9 +178,21 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		app.getConfig().remove("displayActivationDate");
 
 		// replay
-		fragmentController.controller(config, app, patientService, orderService, model);
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
 		
 		// verify
-		assertEquals(Boolean.FALSE, (Boolean) model.getAttribute("displayActivationDate"));
+		assertEquals(Boolean.FALSE, model.getAttribute("displayActivationDate"));
+	}
+	
+	private class BasicUiUtils extends UiUtils {
+		
+		public BasicUiUtils() {
+			super();
+		}
+		
+		@Override
+		public String pageLink(String providerName, String pageName, Map<String, Object> params) {
+			return "/openmrs" + pageLinkWithoutContextPath(providerName, pageName, params);
+		}
 	}
 }

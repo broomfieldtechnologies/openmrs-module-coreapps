@@ -69,6 +69,21 @@
 
             return false;
         });
+
+        jq("#patient-header-personalInfo").click(function (){
+            var personalInfoDialogDiv = jq("#personalInfoContent");
+
+            if (personalInfoDialogDiv.hasClass('hidden')) {
+                personalInfoDialogDiv.removeClass('hidden');
+                jq(this).addClass('expanded');
+            } else {
+                personalInfoDialogDiv.addClass('hidden');
+                jq(this).removeClass('expanded');
+            }
+
+            return false;
+        });
+
     })
 </script>
 
@@ -121,6 +136,13 @@
                     <span class="hide">${ui.message("coreapps.patientHeader.hidecontactinfo")}</span>
                     <i class="toggle-icon icon-caret-up small"></i>
                 </a>
+                <a href="#" id="patient-header-personalInfo" class="contact-info-label">
+                    <span id="coreapps-showPersonalInfo" class="show">${ui.message("coreapps.patientHeader.showpersonalinfo")}</span>
+                    <i class="toggle-icon icon-caret-down small"></i>
+                    <span class="hide">${ui.message("coreapps.patientHeader.hidepersonalinfo")}</span>
+                    <i class="toggle-icon icon-caret-up small"></i>
+                </a>
+
             </span>
 
             <div class="firstLineFragments">
@@ -132,6 +154,10 @@
             <div class="hidden" id="contactInfoContent" class="contact-info-content">
                 ${ ui.includeFragment("coreapps", "patientdashboard/contactInfoInline", [ patient: config.patient, contextModel: appContextModel ]) }
             </div>
+            <div class="hidden" id="personalInfoContent" class="personal-info-content">
+                ${ ui.includeFragment("coreapps", "patientdashboard/personalInfoInline", [ patient: config.patient, contextModel: appContextModel ]) }
+            </div>
+
         </h1>
 
     </div>

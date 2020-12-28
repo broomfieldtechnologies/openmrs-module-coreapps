@@ -20,4 +20,17 @@
         <strong>${ ui.message("coreapps.person.telephoneNumber")}: </strong>
         <span class="left-margin">${config.patient.telephoneNumber ?: ''}</span>
     </div>
+    <br />
+    <div>
+        <strong>${ ui.message("coreapps.person.mobilePhoneNumber")}: </strong>
+        <span class="left-margin">${config.patient.mobilePhoneNumber ?: ''}</span>
+    </div>
+    <br />
+    <div>
+        <strong>${ ui.message("coreapps.person.alternatePhoneNumber")}: </strong>
+        <span class="left-margin">${config.patient.alternatePhoneNumber ?: ''}</span>
+    </div>
+    
 </div>
+
+

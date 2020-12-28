@@ -340,10 +340,10 @@
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>
+<!-- 										<groupId>
 											de.saumya.mojo
 										</groupId>
-										<artifactId>
+ -->										<artifactId>
 											gem-maven-plugin
 										</artifactId>
 										<versionRange>
@@ -473,7 +473,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
+ <!--             <plugin>
                 <groupId>de.saumya.mojo</groupId>
                 <artifactId>gem-maven-plugin</artifactId>
                 <extensions>true</extensions>
@@ -490,7 +490,7 @@
                     <execArgs>${gem.home}/bin/compass compile ${basedir}/src/main/compass</execArgs>
                 </configuration>
             </plugin>
-
+ -->
             <plugin>
               <groupId>com.github.searls</groupId>
               <artifactId>jasmine-maven-plugin</artifactId>
@@ -553,7 +553,7 @@
                             <execArgs>${gem.home}/bin/compass watch ${basedir}/src/main/compass</execArgs>
                         </configuration>
                     </plugin>
-                </plugins>
+               </plugins>
             </build>
         </profile>
     </profiles>
