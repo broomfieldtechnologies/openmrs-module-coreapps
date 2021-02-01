@@ -20,6 +20,10 @@
             ${ ui.encodeHtmlContent(config.patient.alternatePhoneNumber ?: '') }
         </span>
         <em>${ ui.message("coreapps.person.alternatePhoneNumber")}</em>
+        <span id="coreapps-emailId">
+            ${ ui.encodeHtmlContent(config.patient.emailId ?: '') }
+        </span>
+        <em>${ ui.message("coreapps.person.emailId")}</em>
     </span>
     <% if(!config.hideEditDemographicsButton) { %>
     <small id="contact-info-inline-edit" class="edit-info" class="left-margin">
