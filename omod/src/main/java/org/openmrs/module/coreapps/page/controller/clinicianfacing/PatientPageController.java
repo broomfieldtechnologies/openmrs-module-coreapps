@@ -13,6 +13,10 @@
  */
 package org.openmrs.module.coreapps.page.controller.clinicianfacing;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Location;
@@ -28,7 +32,6 @@ import org.openmrs.module.appframework.context.AppContextModel;
 import org.openmrs.module.appframework.domain.AppDescriptor;
 import org.openmrs.module.appframework.domain.Extension;
 import org.openmrs.module.appframework.service.AppFrameworkService;
-import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.coreapps.CoreAppsConstants;
 import org.openmrs.module.coreapps.CoreAppsProperties;
@@ -39,16 +42,13 @@ import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.event.ApplicationEventService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
+import org.openmrs.module.webservices.rest.web.ConversionUtil;
+import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.ui.framework.annotation.InjectBeans;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.openmrs.ui.framework.page.Redirect;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.openmrs.module.webservices.rest.web.representation.Representation;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class PatientPageController {
 
@@ -123,24 +123,42 @@ public class PatientPageController {
             Collections.sort(visitActions);
         }
         model.addAttribute("visitActions", visitActions);
-
+			
         List<Extension> includeFragments = appFrameworkService.getExtensionsForCurrentUser(dashboard + ".includeFragments", contextModel);
         Collections.sort(includeFragments);
         model.addAttribute("includeFragments", includeFragments);
-
+			
         List<Extension> firstColumnFragments = appFrameworkService.getExtensionsForCurrentUser(dashboard + ".firstColumnFragments", contextModel);
         Collections.sort(firstColumnFragments);
-        model.addAttribute("firstColumnFragments", firstColumnFragments);
-
+			
+			//BFT: US10108 adding allergies app to top of patient dashboard
+			int allergyModuleId = 0;
+        for (int i = 0; i < firstColumnFragments.size(); i++) {
+				if (firstColumnFragments.get(i).getId()
+				        .equals("org.openmrs.module.allergyui.patientDashboard.firstColumnFragments")) {
+					allergyModuleId = i;
+					break;
+				}
+			}
+			List<Extension> newFirstColumnFragments = new ArrayList<Extension>();
+			newFirstColumnFragments.add(firstColumnFragments.get(allergyModuleId));
+			for (int j = 0; j < firstColumnFragments.size(); j++) {
+				if (j != allergyModuleId) {
+					newFirstColumnFragments.add(firstColumnFragments.get(j));
+				}
+        }
+			model.addAttribute("firstColumnFragments", newFirstColumnFragments);
+			
         List<Extension> secondColumnFragments = appFrameworkService.getExtensionsForCurrentUser(dashboard + ".secondColumnFragments", contextModel);
         Collections.sort(secondColumnFragments);
-        model.addAttribute("secondColumnFragments", secondColumnFragments);
-
+			model.addAttribute("secondColumnFragments", secondColumnFragments);
+			
         List<Extension> otherActions = appFrameworkService.getExtensionsForCurrentUser(
-                (dashboard == "patientDashboard" ? "clinicianFacingPatientDashboard" : dashboard) + ".otherActions", contextModel);
+			    (dashboard == "patientDashboard" ? "clinicianFacingPatientDashboard" : dashboard) + ".otherActions",
+			    contextModel);
         Collections.sort(otherActions);
         model.addAttribute("otherActions", otherActions);
-
+			
         model.addAttribute("baseDashboardUrl", coreAppsProperties.getDashboardUrl());  // used for breadcrumbs to link back to the base dashboard in the case when this is used to render a context-specific dashboard
         model.addAttribute("dashboard", dashboard);
         
