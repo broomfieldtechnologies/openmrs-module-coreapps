@@ -69,7 +69,7 @@ public class EncounterDispositionTagHandler extends AbstractTagHandler {
 
         EncounterType encounterType = session.getEncounter() != null ? session.getEncounter().getEncounterType() : session.getForm().getEncounterType();
 
-        dispositions = dispositionService.getValidDispositions(visitDomainWrapper, encounterType);
+        dispositions = dispositionService.getValidDispositions(visitDomainWrapper);
 
         Element dispositionObsGroup = node.getOwnerDocument().createElement("obsgroup");
         dispositionObsGroup.setAttribute("groupingConceptId", emrApiProperties.getEmrApiConceptSource().getName() + ":"
