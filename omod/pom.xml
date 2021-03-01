@@ -242,7 +242,8 @@
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
-			<artifactId>htmlformentry-api-1.10</artifactId>
+			<artifactId>htmlformentry-api</artifactId>
+			<version>${htmlformentryVersion}</version>
 		</dependency>
 
 		<!-- End OpenMRS modules -->
