@@ -30,6 +30,11 @@
         <strong>${ ui.message("coreapps.person.alternatePhoneNumber")}: </strong>
         <span class="left-margin">${config.patient.alternatePhoneNumber ?: ''}</span>
     </div>
+    <br />
+    <div>
+        <strong>${ ui.message("coreapps.person.emailId")}: </strong>
+        <span class="left-margin">${config.patient.emailId ?: ''}</span>
+    </div>
     
 </div>
 
