@@ -22,6 +22,7 @@ import org.openmrs.api.OrderService;
 import org.openmrs.api.PatientService;
 import org.openmrs.module.appframework.domain.AppDescriptor;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.fragment.FragmentConfiguration;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.UiUtils;
@@ -47,6 +48,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 
 	private BasicUiUtils ui;
 	
+	private BasicUiUtils ui;
 	@Mock
 	private PatientService patientService;
 	
@@ -83,7 +85,11 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patient", patient);
 
 		// replay
+<<<<<<< HEAD
 		fragmentController.controller(config, app, patientService, orderService, model, (UiUtils) ui);
+=======
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
+>>>>>>> origin/US10085_86_87_88
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
@@ -96,7 +102,11 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patient", wrapper);
 
 		// replay
+<<<<<<< HEAD
 		fragmentController.controller(config, app, patientService, orderService, model, (UiUtils) ui);
+=======
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
+>>>>>>> origin/US10085_86_87_88
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
@@ -109,7 +119,11 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patientId", 1);
 
 		// replay
+<<<<<<< HEAD
 		fragmentController.controller(config, app, patientService, orderService, model, (UiUtils) ui);
+=======
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
+>>>>>>> origin/US10085_86_87_88
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
@@ -122,13 +136,17 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		config.addAttribute("patientId", 1);
 
 		// replay
+<<<<<<< HEAD
 		fragmentController.controller(config, app, patientService, orderService, model, (UiUtils) ui);
+=======
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
+>>>>>>> origin/US10085_86_87_88
 		
 		// verify
 		assertEquals(patient, model.getAttribute("patient"));
 		assertEquals(activeDrugOrders, model.getAttribute("activeDrugOrders"));
 		assertEquals(app.getConfig().get("detailsUrl").asText(), model.getAttribute("detailsUrl").toString());
-		assertEquals(app.getConfig().get("displayActivationDate").asBoolean(), (Boolean) model.getAttribute("displayActivationDate"));
+		assertEquals(app.getConfig().get("displayActivationDate").asBoolean(), model.getAttribute("displayActivationDate"));
 	}
 	
 	@Test
@@ -138,6 +156,7 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		app.getConfig().remove("detailsUrl");
 
 		// replay
+<<<<<<< HEAD
 		fragmentController.controller(config, app, patientService, orderService, model, (UiUtils) ui);
 		
 		// verify
@@ -153,6 +172,39 @@ public class ActiveDrugOrdersFragmentControllerTest {
 
 		// replay
 		fragmentController.controller(config, app, patientService, orderService, model, (UiUtils) ui);
+=======
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
+		
+		// verify
+		assertEquals(app.getConfig().get("detailsUrl"), null);
+	}
+		@Test
+		public void controller_shouldAddDefaultReturnUrlToModelGivenConfigParameterMissing() throws Exception {
+			// setup
+			config.addAttribute("patientId", 1);
+			app.getConfig().remove("returnUrl");
+
+			// replay
+			fragmentController.controller(config, app, patientService, orderService, model, ui);
+
+			// verify
+			assertEquals(model.getAttribute("returnUrl"), "/openmrs/coreapps/clinicianfacing/patient.page?patientId=patient-uuid&");
+		}
+
+		@Test
+		public void controller_shouldAddReturnUrlToModelGivenConfigParameterPresent() throws Exception {
+			// setup
+			config.addAttribute("patientId", 1);
+
+			// replay
+			fragmentController.controller(config, app, patientService, orderService, model, ui);
+
+			// verify
+			assertEquals(model.getAttribute("returnUrl"), "/openmrs/custom/returnUrl.page?patientId={{patientUuid}}");
+
+
+
+>>>>>>> origin/US10085_86_87_88
 		
 		// verify
 		assertEquals("/openmrs/coreapps/clinicianfacing/patient.page?patientId=patient-uuid&", model.getAttribute("returnUrl"));
@@ -177,10 +229,26 @@ public class ActiveDrugOrdersFragmentControllerTest {
 		app.getConfig().remove("displayActivationDate");
 
 		// replay
+<<<<<<< HEAD
 		fragmentController.controller(config, app, patientService, orderService, model, (UiUtils) ui);
+=======
+		fragmentController.controller(config, app, patientService, orderService, model, ui);
+>>>>>>> origin/US10085_86_87_88
 		
 		// verify
-		assertEquals(Boolean.FALSE, (Boolean) model.getAttribute("displayActivationDate"));
+		assertEquals(Boolean.FALSE, model.getAttribute("displayActivationDate"));
+	}
+	
+	private class BasicUiUtils extends UiUtils {
+		
+		public BasicUiUtils() {
+			super();
+		}
+		
+		@Override
+		public String pageLink(String providerName, String pageName, Map<String, Object> params) {
+			return "/openmrs" + pageLinkWithoutContextPath(providerName, pageName, params);
+		}
 	}
 
 	private class BasicUiUtils extends UiUtils {

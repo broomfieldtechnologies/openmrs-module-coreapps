@@ -1,6 +1,7 @@
 package org.openmrs.module.coreapps.fragment.controller.patientdashboard;
 
 import org.apache.commons.beanutils.PropertyUtils;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.openmrs.Order;
@@ -14,10 +15,14 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentConfiguration;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.UiUtils;
+<<<<<<< HEAD
 
 import java.util.Collections;
+=======
+>>>>>>> origin/US10085_86_87_88
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
 
 public class ActiveDrugOrdersFragmentController {
 
@@ -58,7 +63,10 @@ public class ActiveDrugOrdersFragmentController {
         model.addAttribute("displayActivationDate", displayActivationDate);
         model.addAttribute("detailsUrl", detailsUrl);
         model.addAttribute("returnUrl", returnUrl);
+<<<<<<< HEAD
         
+=======
+>>>>>>> origin/US10085_86_87_88
         model.addAttribute("patient", patient);
         model.addAttribute("activeDrugOrders", activeDrugOrders);
     }

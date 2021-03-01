@@ -12,6 +12,14 @@
             ${ ui.encodeHtmlContent(config.patient.telephoneNumber ?: '') }
         </span>
         <em>${ ui.message("coreapps.person.telephoneNumber")}</em>
+        <span id="coreapps-mobileNumber">
+            ${ ui.encodeHtmlContent(config.patient.mobilePhoneNumber ?: '') }
+        </span>
+        <em>${ ui.message("coreapps.person.mobilePhoneNumber")}</em>
+        <span id="coreapps-alternateMobNumber">
+            ${ ui.encodeHtmlContent(config.patient.alternatePhoneNumber ?: '') }
+        </span>
+        <em>${ ui.message("coreapps.person.alternatePhoneNumber")}</em>
     </span>
     <% if(!config.hideEditDemographicsButton) { %>
         <small id="contact-info-inline-edit" class="edit-info" class="ml-2">

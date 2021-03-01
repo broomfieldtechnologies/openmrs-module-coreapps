@@ -1,7 +1,11 @@
 <%
     def careSettings = activeDrugOrders.collect{it.careSetting}.unique();
     detailsUrl = detailsUrl ? detailsUrl.replace("{{patientUuid}}", patient.uuid) : null;
+<<<<<<< HEAD
     returnUrl = returnUrl ? returnUrl.replace("{{patientUuid}}", patient.uuid) : "";
+=======
+returnUrl = returnUrl ? returnUrl.replace("{{patientUuid}}", patient.uuid) : "";
+>>>>>>> origin/US10085_86_87_88
 %>
 
 <style type="text/css">
