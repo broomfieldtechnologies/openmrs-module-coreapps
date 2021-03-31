@@ -84,6 +84,20 @@
             return false;
         });
 
+        jq("#patient-header-vaccineInfo").click(function (){
+            var vaccineInfoDialogDiv = jq("#vaccineInfoContent");
+
+            if (vaccineInfoDialogDiv.hasClass('hidden')) {
+                vaccineInfoDialogDiv.removeClass('hidden');
+                jq(this).addClass('expanded');
+            } else {
+                vaccineInfoDialogDiv.addClass('hidden');
+                jq(this).removeClass('expanded');
+            }
+
+            return false;
+        });
+        
     })
 </script>
 
@@ -142,6 +156,12 @@
                     <span class="hide">${ui.message("coreapps.patientHeader.hidepersonalinfo")}</span>
                     <i class="toggle-icon icon-caret-up small"></i>
                 </a>
+                <a href="#" id="patient-header-vaccineInfo" class="contact-info-label">
+                    <span id="coreapps-showVaccineInfo" class="show">${ui.message("coreapps.patientHeader.showvaccineinfo")}</span>
+                    <i class="toggle-icon icon-caret-down small"></i>
+                    <span class="hide">${ui.message("coreapps.patientHeader.hidevaccineinfo")}</span>
+                    <i class="toggle-icon icon-caret-up small"></i>
+                </a>
 
             </span>
 
@@ -156,6 +176,9 @@
             </div>
             <div class="hidden" id="personalInfoContent" class="personal-info-content">
                 ${ ui.includeFragment("coreapps", "patientdashboard/personalInfoInline", [ patient: config.patient, contextModel: appContextModel ]) }
+            </div>
+            <div class="hidden" id="vaccineInfoContent" class="vaccine-info-content">
+                ${ ui.includeFragment("coreapps", "patientdashboard/vaccineInfoInline", [ patient: config.patient, contextModel: appContextModel ]) }
             </div>
 
         </h1>

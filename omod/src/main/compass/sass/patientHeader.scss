@@ -74,6 +74,19 @@ $green: #51A351;
         top: -15px;
       }
     }
+    
+     .vaccine-info-inline {
+      font-size: 0.6em;
+
+      em {
+        font-size: 0.7em;
+      }
+
+      small {
+        position: relative;
+        top: -15px;
+      }
+    }   
   }
 
   .contact-info-label {
@@ -221,6 +234,12 @@ $green: #51A351;
   display: inline-block;
 }
 
+.edit-top {
+    
+    margin: 60px;
+    padding: 70px;
+ }
+ 
 .remove-tag {
   display: inline;
   float: left;
